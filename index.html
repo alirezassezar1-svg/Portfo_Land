@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROJECTVERSE | Premium Portfolio Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b;
+            --surface: #121215;
+            --surface-hover: #1a1a1f;
+            --border: #27272a;
+            --text: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-violet: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.15);
+            --radius: 16px;
+            --font-en: 'Outfit', sans-serif;
+            --font-fa: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-en);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease;
+        }
+
+        body[dir="rtl"] {
+            font-family: var(--font-fa);
+        }
+
+        /* Premium Glassmorphism Components */
+        .glass-panel {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, #121215, #0e0e11);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-muted);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            border-left: 3px solid var(--accent-violet);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        body[dir="rtl"] .nav-item.active {
+            border-left: none;
+            border-right: 3px solid var(--accent-violet);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(9, 9, 11, 0.95);
+                backdrop-filter: blur(20px);
+                border-top: 1px solid var(--border);
+                padding: 8px 16px;
+                justify-content: space-around;
+                z-index: 50;
+            }
+            .bottom-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                color: var(--text-muted);
+                font-size: 10px;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 8px;
+                transition: all 0.2s;
+            }
+            .bottom-nav-item.active {
+                color: var(--accent-violet);
+            }
+            .main-content {
+                padding-bottom: 80px !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .bottom-nav {
+                display: none;
+            }
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                width: 260px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                border-right: 1px solid var(--border);
+                padding: 24px;
+                background: var(--surface);
+                z-index: 40;
+            }
+            body[dir="rtl"] .sidebar {
+                left: auto;
+                right: 0;
+                border-right: none;
+                border-left: 1px solid var(--border);
+            }
+            .main-content {
+                margin-left: 260px;
+                padding: 32px 48px;
+                min-height: 100vh;
+            }
+            body[dir="rtl"] .main-content {
+                margin-left: 0;
+                margin-right: 260px;
+            }
+        }
+
+        /* Input Styling */
+        input, textarea, select {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .badge-violet { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .badge-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+        .badge-yellow { background: rgba(234, 179, 8, 0.15); color: #facc15; }
+        .badge-red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .badge-gray { background: rgba(161, 161, 170, 0.15); color: #a1a1aa; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* Wizard Progress */
+        .wizard-step {
+            display: none;
+        }
+        .wizard-step.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Studio Tabs */
+        .studio-tab {
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .studio-tab.active {
+            background: var(--accent-violet);
+            color: white;
+        }
+        .studio-tab:not(.active) {
+            background: var(--surface);
+            color: var(--text-muted);
+        }
+        .studio-tab:not(.active):hover {
+            background: var(--surface-hover);
+        }
+
+        /* Output Box */
+        .output-box {
+            background: #0a0a0c;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+            color: #e4e4e7;
+        }
+
+        body[dir="rtl"] .output-box {
+            font-family: var(--font-fa);
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface);
+            border: 1px solid var(--accent-violet);
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <!-- Sidebar (Desktop) -->
+    <nav class="sidebar">
+        <div class="flex items-center gap-3 mb-8 px-2">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center">
+                <i data-lucide="layers" class="text-white w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-tight">PROJECTVERSE</h1>
+                <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Portfolio Studio</p>
+            </div>
+        </div>
+
+        <div class="flex-1 space-y-1 overflow-y-auto">
+            <div class="nav-item active" onclick="navigate('dashboard')" data-view="dashboard">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <span data-i18n="nav_dashboard">Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="navigate('projects')" data-view="projects">
+                <i data-lucide="folder-kanban" class="w-5 h-5"></i>
+                <span data-i18n="nav_projects">All Projects</span>
+            </div>
+            <div class="nav-item" onclick="navigate('wizard')" data-view="wizard">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                <span data-i18n="nav_add">Add Project</span>
+            </div>
+            <div class="nav-item" onclick="navigate('studios')" data-view="studios">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                <span data-i18n="nav_studios">Content Studios</span>
+            </div>
+            <div class="nav-item" onclick="navigate('analyzer')" data-view="analyzer">
+                <i data-lucide="scan-search" class="w-5 h-5"></i>
+                <span data-i18n="nav_analyzer">Tech Analyzer</span>
+            </div>
+            <div class="nav-item" onclick="navigate('export')" data-view="export">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                <span data-i18n="nav_export">Export Center</span>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-zinc-800 space-y-2">
+            <button class="btn-secondary w-full text-sm" onclick="toggleLang()">
+                <i data-lucide="languages" class="w-4 h-4"></i>
+                <span id="langToggleText">فارسی</span>
+            </button>
+            <button class="btn-secondary w-full text-sm" onclick="toggleTheme()">
+                <i data-lucide="moon" class="w-4 h-4"></i>
+                <span>Theme</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-section animate-fade-in">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight" data-i18n="dashboard_title">Command Center</h2>
+                    <p class="text-zinc-400 mt-1" data-i18n="dashboard_subtitle">Overview of your digital ecosystem</p>
+                </div>
+                <button class="btn-primary" onclick="navigate('wizard')">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span data-i18n="dashboard_add_btn">New Project</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="glass-card p-6">
+                    <div class="flex items-center gap-3 text-zinc-400 mb-2">
+                        <i data-lucide="folder" class="w-5 h-5"></i>
+                        <span class="text-sm font-medium" data-i18n="stats_total">Total Projects</span>
+                    </div>
+                    <p class="text-4xl font-bold" id="stat-total">0</p>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="flex items-center gap-3 text-zinc-400 mb-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+                        <span class="text-sm font-medium" data-i18n="stats_verified">Verified Tech Stacks</span>
+                    </div>
+                    <p class="text-4xl font-bold" id="stat-verified">0</p>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="flex items-center gap-3 text-zinc-400 mb-2">
+                        <i data-lucide="globe" class="w-5 h-5 text-blue-400"></i>
+                        <span class="text-sm font-medium" data-i18n="stats_deployed">Live Deployments</span>
+                    </div>
+                    <p class="text-4xl font-bold" id="stat-deployed">0</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-4" data-i18n="recent_projects">Recent Projects</h3>
+            <div id="dashboard-projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- ALL PROJECTS VIEW -->
+        <div id="view-projects" class="view-section hidden animate-fade-in">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <h2 class="text-3xl font-bold tracking-tight" data-i18n="projects_title">Project Registry</h2>
+                <div class="flex gap-2 w-full md:w-auto">
+                    <input type="text" id="search-projects" placeholder="Search projects..." class="flex-1 md:w-64" oninput="filterProjects()">
+                    <button class="btn-primary" onclick="navigate('wizard')">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Populated by JS -->
+            </div>
+            <div id="projects-empty" class="hidden text-center py-20">
+                <i data-lucide="folder-open" class="w-16 h-16 text-zinc-700 mx-auto mb-4"></i>
+                <p class="text-zinc-500" data-i18n="projects_empty">No projects found. Add your first project to get started.</p>
+            </div>
+        </div>
+
+        <!-- WIZARD VIEW -->
+        <div id="view-wizard" class="view-section hidden animate-fade-in">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-bold tracking-tight" data-i18n="wizard_title">Project Intake Wizard</h2>
+                    <button class="text-zinc-400 hover:text-white" onclick="navigate('dashboard')">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex gap-2 mb-8">
+                    <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+                        <div class="h-full bg-blue-500 rounded-full transition-all duration-300" style="width: 25%" id="wizard-progress-1"></div>
+                    </div>
+                    <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+                        <div class="h-full bg-blue-500 rounded-full transition-all duration-300" style="width: 0%" id="wizard-progress-2"></div>
+                    </div>
+                    <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+                        <div class="h-full bg-blue-500 rounded-full transition-all duration-300" style="width: 0%" id="wizard-progress-3"></div>
+                    </div>
+                    <div class="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+                        <div class="h-full bg-blue-500 rounded-full transition-all duration-300" style="width: 0%" id="wizard-progress-4"></div>
+                    </div>
+                </div>
+
+                <form id="project-form" class="glass-panel p-6 md:p-8">
+                    <!-- STEP 1: Core Info -->
+                    <div class="wizard-step active" id="step-1">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">1</span>
+                            <span data-i18n="wizard_step1">Core Identity</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_name_en">Project Name (English)</label>
+                                <input type="text" name="name" required placeholder="e.g. Nono Nick Portfolio">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_name_fa">Project Name (Persian)</label>
+                                <input type="text" name="nameFa" placeholder="مثلاً: نمونه کار نونو نیک">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_desc_en">Description (English)</label>
+                                <textarea name="desc" rows="3" placeholder="What problem does it solve?"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_desc_fa">Description (Persian)</label>
+                                <textarea name="descFa" rows="3" placeholder="این پروژه چه مشکلی را حل می‌کند؟"></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_type">Project Type</label>
+                                    <select name="type">
+                                        <option value="website">Website</option>
+                                        <option value="webapp">Web App</option>
+                                        <option value="ai">AI Tool</option>
+                                        <option value="tool">Developer Tool</option>
+                                        <option value="saas">SaaS</option>
+                                        <option value="dashboard">Dashboard</option>
+                                        <option value="api">API</option>
+                                        <option value="mobile">Mobile App</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_status">Status</label>
+                                    <select name="status">
+                                        <option value="working">Working</option>
+                                        <option value="partial">Partially Working</option>
+                                        <option value="experimental">Experimental</option>
+                                        <option value="archived">Archived</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Links & Tech -->
+                    <div class="wizard-step" id="step-2">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">2</span>
+                            <span data-i18n="wizard_step2">Links & Technology</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_repo">Source Repository URL</label>
+                                <input type="url" name="repoUrl" placeholder="https://github.com/username/repo">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_live">Live Demo URL</label>
+                                <input type="url" name="liveUrl" placeholder="https://myproject.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_tech">Technology Stack (comma separated)</label>
+                                <input type="text" name="techStack" placeholder="React, Tailwind CSS, Node.js, MongoDB">
+                                <p class="text-xs text-zinc-500 mt-2" data-i18n="field_tech_hint">Separate technologies with commas. These will be marked as "User Claimed" until verified by the Analyzer.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_platform">Hosting Platform</label>
+                                <select name="platform">
+                                    <option value="github-pages">GitHub Pages</option>
+                                    <option value="cloudflare-pages">Cloudflare Pages</option>
+                                    <option value="cloudflare-workers">Cloudflare Workers</option>
+                                    <option value="vercel">Vercel</option>
+                                    <option value="netlify">Netlify</option>
+                                    <option value="stackblitz">StackBlitz</option>
+                                    <option value="replit">Replit</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Features & Role -->
+                    <div class="wizard-step" id="step-3">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">3</span>
+                            <span data-i18n="wizard_step3">Features & Contribution</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_features">Key Features (one per line)</label>
+                                <textarea name="features" rows="4" placeholder="User authentication&#10;Real-time dashboard&#10;Dark mode support"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_role">Your Role & Contribution</label>
+                                <input type="text" name="role" placeholder="e.g. Lead Frontend Developer, UI/UX Designer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_ai">Was AI-assisted development used?</label>
+                                <select name="aiUsed">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Publishing & Privacy -->
+                    <div class="wizard-step" id="step-4">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">4</span>
+                            <span data-i18n="wizard_step4">Publishing & Privacy</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+                                <input type="checkbox" name="isPublic" id="isPublic" class="w-5 h-5 accent-violet-500 rounded" checked>
+                                <div>
+                                    <label for="isPublic" class="font-medium" data-i18n="field_public">Allow public export</label>
+                                    <p class="text-xs text-zinc-500" data-i18n="field_public_hint">If unchecked, this project will be excluded from public portfolio exports.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+                                <input type="checkbox" name="isConfidential" id="isConfidential" class="w-5 h-5 accent-violet-500 rounded">
+                                <div>
+                                    <label for="isConfidential" class="font-medium" data-i18n="field_confidential">Confidential Project</label>
+                                    <p class="text-xs text-zinc-500" data-i18n="field_confidential_hint">Strictly private. Will never appear in any generated output.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-zinc-400 mb-2" data-i18n="field_audience">Intended Audience</label>
+                                <input type="text" name="audience" placeholder="e.g. Tech recruiters, SaaS founders">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="flex items-center justify-between mt-8 pt-6 border-t border-zinc-800">
+                        <button type="button" class="btn-secondary" id="btn-prev" onclick="wizardPrev()" style="display: none;">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span data-i18n="btn_prev">Previous</span>
+                        </button>
+                        <div class="flex-1"></div>
+                        <button type="button" class="btn-primary" id="btn-next" onclick="wizardNext()">
+                            <span data-i18n="btn_next">Next Step</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <button type="submit" class="btn-primary hidden" id="btn-submit">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span data-i18n="btn_save">Save Project</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- STUDIOS VIEW -->
+        <div id="view-studios" class="view-section hidden animate-fade-in">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight" data-i18n="studios_title">Content Studios</h2>
+                    <p class="text-zinc-400 mt-1" data-i18n="studios_subtitle">Generate professional content from verified project data</p>
+                </div>
+            </div>
+
+            <div class="flex gap-2 overflow-x-auto pb-4 mb-6" id="studio-tabs">
+                <div class="studio-tab active" onclick="switchStudio('cv')" data-i18n="studio_cv">📄 CV & Admin</div>
+                <div class="studio-tab" onclick="switchStudio('ad')" data-i18n="studio_ad">📢 Advertising</div>
+                <div class="studio-tab" onclick="switchStudio('luxury')" data-i18n="studio_luxury">💎 Luxury Portfolio</div>
+                <div class="studio-tab" onclick="switchStudio('book')" data-i18n="studio_book">📚 Books & Guides</div>
+                <div class="studio-tab" onclick="switchStudio('magazine')" data-i18n="studio_magazine">📰 Magazine</div>
+                <div class="studio-tab" onclick="switchStudio('news')" data-i18n="studio_news">📡 Newsroom</div>
+            </div>
+
+            <div class="glass-panel p-6">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <select id="studio-project-select" class="flex-1">
+                        <option value="" data-i18n="select_project">Select a project...</option>
+                    </select>
+                    <select id="studio-lang-select" class="w-full md:w-40">
+                        <option value="en">English</option>
+                        <option value="fa">فارسی</option>
+                    </select>
+                    <button class="btn-primary" onclick="generateStudioContent()">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span data-i18n="btn_generate">Generate</span>
+                    </button>
+                </div>
+                
+                <div id="studio-output-container" class="hidden">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-zinc-400" data-i18n="studio_output">Generated Output</span>
+                        <button class="text-xs text-blue-400 hover:text-blue-300" onclick="copyToClipboard('studio-output')">
+                            <i data-lucide="copy" class="w-3 h-3 inline"></i> Copy
+                        </button>
+                    </div>
+                    <div id="studio-output" class="output-box"></div>
+                </div>
+                <div id="studio-empty" class="text-center py-16 text-zinc-500">
+                    <i data-lucide="file-text" class="w-12 h-12 mx-auto mb-3 text-zinc-700"></i>
+                    <p data-i18n="studio_empty">Select a project and studio to generate content.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYZER VIEW -->
+        <div id="view-analyzer" class="view-section hidden animate-fade-in">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold tracking-tight mb-2" data-i18n="analyzer_title">Technical Analyzer</h2>
+                <p class="text-zinc-400 mb-8" data-i18n="analyzer_subtitle">Upload project files (package.json, README.md) to detect technologies with evidence.</p>
+
+                <div class="glass-panel p-8 text-center border-dashed border-2 border-zinc-700 hover:border-violet-500 transition-colors cursor-pointer" onclick="document.getElementById('file-upload').click()">
+                    <input type="file" id="file-upload" class="hidden" accept=".json,.md,.txt,.js,.ts,.php" multiple onchange="analyzeFiles(event)">
+                    <i data-lucide="upload-cloud" class="w-16 h-16 text-zinc-600 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2" data-i18n="analyzer_drop">Drop files here or click to upload</h3>
+                    <p class="text-sm text-zinc-500" data-i18n="analyzer_drop_hint">Supported: package.json, composer.json, README.md, source files.</p>
+                </div>
+
+                <div id="analyzer-results" class="mt-8 hidden">
+                    <h3 class="text-xl font-semibold mb-4" data-i18n="analyzer_results">Analysis Results</h3>
+                    <div class="glass-card p-6">
+                        <div class="flex items-center gap-2 mb-4 text-green-400">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span class="font-medium" data-i18n="analyzer_success">Files processed successfully</span>
+                        </div>
+                        <div id="analyzer-tech-list" class="space-y-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPORT VIEW -->
+        <div id="view-export" class="view-section hidden animate-fade-in">
+            <h2 class="text-3xl font-bold tracking-tight mb-2" data-i18n="export_title">Export Center</h2>
+            <p class="text-zinc-400 mb-8" data-i18n="export_subtitle">Backup your data or generate portfolio packages.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i data-lucide="database" class="w-5 h-5 text-blue-400"></i>
+                        <span data-i18n="export_backup">Data Backup</span>
+                    </h3>
+                    <p class="text-sm text-zinc-400 mb-4" data-i18n="export_backup_desc">Export all project data as a JSON file for safekeeping or migration.</p>
+                    <button class="btn-primary w-full" onclick="exportData('json')">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span data-i18n="export_btn_json">Export JSON Backup</span>
+                    </button>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i data-lucide="table" class="w-5 h-5 text-green-400"></i>
+                        <span data-i18n="export_csv">CSV Export</span>
+                    </h3>
+                    <p class="text-sm text-zinc-400 mb-4" data-i18n="export_csv_desc">Export project list as a CSV file for spreadsheets.</p>
+                    <button class="btn-primary w-full" onclick="exportData('csv')">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span data-i18n="export_btn_csv">Export CSV</span>
+                    </button>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i data-lucide="file-code" class="w-5 h-5 text-violet-400"></i>
+                        <span data-i18n="export_portfolio">Portfolio Website</span>
+                    </h3>
+                    <p class="text-sm text-zinc-400 mb-4" data-i18n="export_portfolio_desc">Generate a static HTML portfolio page from your public projects.</p>
+                    <button class="btn-primary w-full" onclick="generatePortfolioHTML()">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span data-i18n="export_btn_portfolio">Generate Portfolio HTML</span>
+                    </button>
+                </div>
+
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <i data-lucide="upload" class="w-5 h-5 text-yellow-400"></i>
+                        <span data-i18n="import_backup">Import Backup</span>
+                    </h3>
+                    <p class="text-sm text-zinc-400 mb-4" data-i18n="import_backup_desc">Restore project data from a previously exported JSON file.</p>
+                    <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
+                    <button class="btn-secondary w-full" onclick="document.getElementById('import-file').click()">
+                        <i data-lucide="upload" class="w-4 h-4"></i>
+                        <span data-i18n="export_btn_import">Import JSON</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-item active" onclick="navigate('dashboard')" data-view="dashboard">
+            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+            <span data-i18n="nav_dashboard">Home</span>
+        </div>
+        <div class="bottom-nav-item" onclick="navigate('projects')" data-view="projects">
+            <i data-lucide="folder" class="w-5 h-5"></i>
+            <span data-i18n="nav_projects">Projects</span>
+        </div>
+        <div class="bottom-nav-item" onclick="navigate('wizard')" data-view="wizard">
+            <i data-lucide="plus-circle" class="w-6 h-6 text-violet-500"></i>
+            <span data-i18n="nav_add">Add</span>
+        </div>
+        <div class="bottom-nav-item" onclick="navigate('studios')" data-view="studios">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <span data-i18n="nav_studios">Studios</span>
+        </div>
+        <div class="bottom-nav-item" onclick="navigate('export')" data-view="export">
+            <i data-lucide="download" class="w-5 h-5"></i>
+            <span data-i18n="nav_export">Export</span>
+        </div>
+    </nav>
+
+    <script>
+        // ==========================================
+        // 1. I18N DICTIONARY (English & Persian)
+        // ==========================================
+        const i18n = {
+            en: {
+                nav_dashboard: "Dashboard",
+                nav_projects: "All Projects",
+                nav_add: "Add Project",
+                nav_studios: "Content Studios",
+                nav_analyzer: "Tech Analyzer",
+                nav_export: "Export Center",
+                dashboard_title: "Command Center",
+                dashboard_subtitle: "Overview of your digital ecosystem",
+                dashboard_add_btn: "New Project",
+                stats_total: "Total Projects",
+                stats_verified: "Verified Tech Stacks",
+                stats_deployed: "Live Deployments",
+                recent_projects: "Recent Projects",
+                projects_title: "Project Registry",
+                projects_empty: "No projects found. Add your first project to get started.",
+                wizard_title: "Project Intake Wizard",
+                wizard_step1: "Core Identity",
+                wizard_step2: "Links & Technology",
+                wizard_step3: "Features & Contribution",
+                wizard_step4: "Publishing & Privacy",
+                field_name_en: "Project Name (English)",
+                field_name_fa: "Project Name (Persian)",
+                field_desc_en: "Description (English)",
+                field_desc_fa: "Description (Persian)",
+                field_type: "Project Type",
+                field_status: "Status",
+                field_repo: "Source Repository URL",
+                field_live: "Live Demo URL",
+                field_tech: "Technology Stack (comma separated)",
+                field_tech_hint: "Separate technologies with commas. These will be marked as 'User Claimed' until verified.",
+                field_platform: "Hosting Platform",
+                field_features: "Key Features (one per line)",
+                field_role: "Your Role & Contribution",
+                field_ai: "Was AI-assisted development used?",
+                field_public: "Allow public export",
+                field_public_hint: "If unchecked, this project will be excluded from public portfolio exports.",
+                field_confidential: "Confidential Project",
+                field_confidential_hint: "Strictly private. Will never appear in any generated output.",
+                field_audience: "Intended Audience",
+                btn_prev: "Previous",
+                btn_next: "Next Step",
+                btn_save: "Save Project",
+                studios_title: "Content Studios",
+                studios_subtitle: "Generate professional content from verified project data",
+                studio_cv: "📄 CV & Admin",
+                studio_ad: "📢 Advertising",
+                studio_luxury: "💎 Luxury Portfolio",
+                studio_book: "📚 Books & Guides",
+                studio_magazine: "📰 Magazine",
+                studio_news: "📡 Newsroom",
+                select_project: "Select a project...",
+                btn_generate: "Generate",
+                studio_output: "Generated Output",
+                studio_empty: "Select a project and studio to generate content.",
+                analyzer_title: "Technical Analyzer",
+                analyzer_subtitle: "Upload project files (package.json, README.md) to detect technologies with evidence.",
+                analyzer_drop: "Drop files here or click to upload",
+                analyzer_drop_hint: "Supported: package.json, composer.json, README.md, source files.",
+                analyzer_results: "Analysis Results",
+                analyzer_success: "Files processed successfully",
+                export_title: "Export Center",
+                export_subtitle: "Backup your data or generate portfolio packages.",
+                export_backup: "Data Backup",
+                export_backup_desc: "Export all project data as a JSON file for safekeeping or migration.",
+                export_btn_json: "Export JSON Backup",
+                export_csv: "CSV Export",
+                export_csv_desc: "Export project list as a CSV file for spreadsheets.",
+                export_btn_csv: "Export CSV",
+                export_portfolio: "Portfolio Website",
+                export_portfolio_desc: "Generate a static HTML portfolio page from your public projects.",
+                export_btn_portfolio: "Generate Portfolio HTML",
+                import_backup: "Import Backup",
+                import_backup_desc: "Restore project data from a previously exported JSON file.",
+                export_btn_import: "Import JSON",
+                toast_saved: "Project saved successfully!",
+                toast_deleted: "Project deleted.",
+                toast_exported: "Export completed!",
+                toast_imported: "Data imported successfully!",
+                toast_copied: "Copied to clipboard!"
+            },
+            fa: {
+                nav_dashboard: "داشبورد",
+                nav_projects: "همه پروژه‌ها",
+                nav_add: "افزودن پروژه",
+                nav_studios: "استودیوهای محتوا",
+                nav_analyzer: "آنالیزور فنی",
+                nav_export: "مرکز خروجی",
+                dashboard_title: "مرکز فرماندهی",
+                dashboard_subtitle: "نمای کلی از اکوسیستم دیجیتال شما",
+                dashboard_add_btn: "پروژه جدید",
+                stats_total: "کل پروژه‌ها",
+                stats_verified: "تکنولوژی‌های تأیید شده",
+                stats_deployed: "استقرارهای فعال",
+                recent_projects: "پروژه‌های اخیر",
+                projects_title: "رجیستری پروژه‌ها",
+                projects_empty: "پروژه‌ای یافت نشد. اولین پروژه خود را اضافه کنید.",
+                wizard_title: "ویزارد ثبت پروژه",
+                wizard_step1: "هویت اصلی",
+                wizard_step2: "لینک‌ها و تکنولوژی",
+                wizard_step3: "ویژگی‌ها و مشارکت",
+                wizard_step4: "انتشار و حریم خصوصی",
+                field_name_en: "نام پروژه (انگلیسی)",
+                field_name_fa: "نام پروژه (فارسی)",
+                field_desc_en: "توضیحات (انگلیسی)",
+                field_desc_fa: "توضیحات (فارسی)",
+                field_type: "نوع پروژه",
+                field_status: "وضعیت",
+                field_repo: "لینک مخزن کد",
+                field_live: "لینک دموی زنده",
+                field_tech: "تکنولوژی‌ها (با کاما جدا کنید)",
+                field_tech_hint: "تکنولوژی‌ها را با کاما جدا کنید. تا زمان تأیید، به عنوان 'ادعای کاربر' علامت‌گذاری می‌شوند.",
+                field_platform: "پلتفرم میزبانی",
+                field_features: "ویژگی‌های کلیدی (هر خط یک ویژگی)",
+                field_role: "نقش و مشارکت شما",
+                field_ai: "آیا از توسعه با کمک هوش مصنوعی استفاده شده؟",
+                field_public: "اجازه خروجی عمومی",
+                field_public_hint: "اگر تیک نخورد، این پروژه از خروجی‌های عمومی حذف می‌شود.",
+                field_confidential: "پروژه محرمانه",
+                field_confidential_hint: "کاملاً خصوصی. هرگز در هیچ خروجی تولید شده ظاهر نمی‌شود.",
+                field_audience: "مخاطب هدف",
+                btn_prev: "مرحله قبل",
+                btn_next: "مرحله بعد",
+                btn_save: "ذخیره پروژه",
+                studios_title: "استودیوهای محتوا",
+                studios_subtitle: "تولید محتوای حرفه‌ای از داده‌های تأیید شده پروژه",
+                studio_cv: "📄 رزومه و اداری",
+                studio_ad: "📢 تبلیغات",
+                studio_luxury: "💎 پورتفولیوی لوکس",
+                studio_book: "📚 کتاب و راهنما",
+                studio_magazine: "📰 مجله",
+                studio_news: "📡 خبرگزاری",
+                select_project: "یک پروژه انتخاب کنید...",
+                btn_generate: "تولید محتوا",
+                studio_output: "خروجی تولید شده",
+                studio_empty: "یک پروژه و استودیو را برای تولید محتوا انتخاب کنید.",
+                analyzer_title: "آنالیزور فنی",
+                analyzer_subtitle: "فایل‌های پروژه (package.json, README.md) را برای شناسایی تکنولوژی‌ها آپلود کنید.",
+                analyzer_drop: "فایل‌ها را اینجا رها کنید یا کلیک کنید",
+                analyzer_drop_hint: "پشتیبانی از: package.json, composer.json, README.md",
+                analyzer_results: "نتایج آنالیز",
+                analyzer_success: "فایل‌ها با موفقیت پردازش شدند",
+                export_title: "مرکز خروجی",
+                export_subtitle: "از داده‌های خود بکاپ بگیرید یا پکیج‌های پورتفولیو بسازید.",
+                export_backup: "بکاپ داده‌ها",
+                export_backup_desc: "تمام داده‌های پروژه را به صورت فایل JSON خروجی بگیرید.",
+                export_btn_json: "خروجی JSON",
+                export_csv: "خروجی CSV",
+                export_csv_desc: "لیست پروژه‌ها را به صورت فایل CSV خروجی بگیرید.",
+                export_btn_csv: "خروجی CSV",
+                export_portfolio: "وب‌سایت پورتفولیو",
+                export_portfolio_desc: "یک صفحه HTML استاتیک از پروژه‌های عمومی خود بسازید.",
+                export_btn_portfolio: "ساخت HTML پورتفولیو",
+                import_backup: "وارد کردن بکاپ",
+                import_backup_desc: "داده‌های پروژه را از فایل JSON قبلی بازیابی کنید.",
+                export_btn_import: "وارد کردن JSON",
+                toast_saved: "پروژه با موفقیت ذخیره شد!",
+                toast_deleted: "پروژه حذف شد.",
+                toast_exported: "خروجی با موفقیت گرفته شد!",
+                toast_imported: "داده‌ها با موفقیت وارد شدند!",
+                toast_copied: "در کلیپ‌بورد کپی شد!"
+            }
+        };
+
+        // ==========================================
+        // 2. STATE MANAGEMENT & DATABASE
+        // ==========================================
+        let db;
+        let state = {
+            lang: 'en',
+            currentView: 'dashboard',
+            projects: [],
+            editingProjectId: null,
+            wizardStep: 1,
+            activeStudio: 'cv'
+        };
+
+        // Initialize IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open('ProjectVerseDB', 1);
+                request.onupgradeneeded = (e) => {
+                    db = e.target.result;
+                    if (!db.objectStoreNames.contains('projects')) {
+                        db.createObjectStore('projects', { keyPath: 'id' });
+                    }
+                };
+                request.onsuccess = (e) => {
+                    db = e.target.result;
+                    resolve();
+                };
+                request.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        function getAllProjects() {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('projects', 'readonly');
+                const store = tx.objectStore('projects');
+                const request = store.getAll();
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function saveProject(project) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('projects', 'readwrite');
+                const store = tx.objectStore('projects');
+                const request = store.put(project);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function deleteProject(id) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction('projects', 'readwrite');
+                const store = tx.objectStore('projects');
+                const request = store.delete(id);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // ==========================================
+        // 3. UI RENDERING & NAVIGATION
+        // ==========================================
+        function navigate(view) {
+            state.currentView = view;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${view}`).classList.remove('hidden');
+            document.getElementById(`view-${view}`).classList.add('animate-fade-in');
+
+            // Update Nav UI
+            document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => {
+                el.classList.toggle('active', el.dataset.view === view);
+            });
+
+            if (view === 'dashboard') renderDashboard();
+            if (view === 'projects') renderProjects();
+            if (view === 'studios') populateStudioSelect();
+        }
+
+        function toggleLang() {
+            state.lang = state.lang === 'en' ? 'fa' : 'en';
+            document.documentElement.lang = state.lang;
+            document.documentElement.dir = state.lang === 'fa' ? 'rtl' : 'ltr';
+            document.getElementById('langToggleText').innerText = state.lang === 'en' ? 'فارسی' : 'English';
+            updateUILanguage();
+        }
+
+        function updateUILanguage() {
+            const dict = i18n[state.lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.innerText = dict[key];
+            });
+            // Re-render dynamic content
+            renderDashboard();
+            renderProjects();
+            populateStudioSelect();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==========================================
+        // 4. DASHBOARD & PROJECTS RENDER
+        // ==========================================
+        async function renderDashboard() {
+            const projects = await getAllProjects();
+            document.getElementById('stat-total').innerText = projects.length;
+            document.getElementById('stat-verified').innerText = projects.filter(p => p.verifiedTech && p.verifiedTech.length > 0).length;
+            document.getElementById('stat-deployed').innerText = projects.filter(p => p.liveUrl).length;
+
+            const recent = projects.sort((a, b) => b.createdAt - a.createdAt).slice(0, 6);
+            const container = document.getElementById('dashboard-projects');
+            container.innerHTML = '';
+
+            if (recent.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-zinc-500">${i18n[state.lang].projects_empty}</div>`;
+                return;
+            }
+
+            recent.forEach(p => {
+                container.innerHTML += createProjectCard(p);
+            });
+            lucide.createIcons();
+        }
+
+        async function renderProjects() {
+            const projects = await getAllProjects();
+            const container = document.getElementById('projects-list');
+            const emptyState = document.getElementById('projects-empty');
+            
+            const searchTerm = document.getElementById('search-projects')?.value.toLowerCase() || '';
+            const filtered = projects.filter(p => 
+                (p.name && p.name.toLowerCase().includes(searchTerm)) ||
+                (p.nameFa && p.nameFa.includes(searchTerm)) ||
+                (p.techStack && p.techStack.toLowerCase().includes(searchTerm))
+            );
+
+            container.innerHTML = '';
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                filtered.forEach(p => {
+                    container.innerHTML += createProjectCard(p);
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function createProjectCard(p) {
+            const name = state.lang === 'fa' && p.nameFa ? p.nameFa : p.name;
+            const desc = state.lang === 'fa' && p.descFa ? p.descFa : p.desc;
+            const techs = p.techStack ? p.techStack.split(',').map(t => t.trim()).slice(0, 3) : [];
+            
+            let statusBadge = '';
+            if (p.status === 'working') statusBadge = `<span class="badge badge-green">Live</span>`;
+            else if (p.status === 'partial') statusBadge = `<span class="badge badge-yellow">Partial</span>`;
+            else if (p.status === 'archived') statusBadge = `<span class="badge badge-gray">Archived</span>`;
+            else statusBadge = `<span class="badge badge-blue">Experimental</span>`;
+
+            return `
+                <div class="glass-card p-5 flex flex-col h-full">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-violet-600/20 flex items-center justify-center">
+                            <i data-lucide="folder" class="w-5 h-5 text-violet-400"></i>
+                        </div>
+                        ${statusBadge}
+                    </div>
+                    <h4 class="font-semibold text-lg mb-1 truncate">${name || 'Untitled Project'}</h4>
+                    <p class="text-sm text-zinc-400 line-clamp-2 mb-4 flex-1">${desc || 'No description provided.'}</p>
+                    
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        ${techs.map(t => `<span class="badge badge-violet text-[10px]">${t}</span>`).join('')}
+                        ${p.techStack && p.techStack.split(',').length > 3 ? `<span class="badge badge-gray text-[10px]">+${p.techStack.split(',').length - 3}</span>` : ''}
+                    </div>
+
+                    <div class="flex items-center gap-2 pt-4 border-t border-zinc-800 mt-auto">
+                        ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i data-lucide="external-link" class="w-4 h-4"></i></a>` : ''}
+                        ${p.repoUrl ? `<a href="${p.repoUrl}" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>` : ''}
+                        <div class="flex-1"></div>
+                        <button onclick="editProject('${p.id}')" class="text-zinc-400 hover:text-blue-400 transition-colors"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+                        <button onclick="confirmDelete('${p.id}')" class="text-zinc-400 hover:text-red-400 transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterProjects() {
+            renderProjects();
+        }
+
+        // ==========================================
+        // 5. WIZARD LOGIC
+        // ==========================================
+        function wizardNext() {
+            if (state.wizardStep < 4) {
+                state.wizardStep++;
+                updateWizardUI();
+            }
+        }
+
+        function wizardPrev() {
+            if (state.wizardStep > 1) {
+                state.wizardStep--;
+                updateWizardUI();
+            }
+        }
+
+        function updateWizardUI() {
+            document.querySelectorAll('.wizard-step').forEach((el, index) => {
+                el.classList.toggle('active', index + 1 === state.wizardStep);
+            });
+
+            document.getElementById('btn-prev').style.display = state.wizardStep > 1 ? 'inline-flex' : 'none';
+            document.getElementById('btn-next').classList.toggle('hidden', state.wizardStep === 4);
+            document.getElementById('btn-submit').classList.toggle('hidden', state.wizardStep !== 4);
+
+            // Update progress bars
+            for (let i = 1; i <= 4; i++) {
+                const bar = document.getElementById(`wizard-progress-${i}`);
+                if (bar) bar.style.width = i <= state.wizardStep ? '100%' : '0%';
+            }
+        }
+
+        function editProject(id) {
+            const project = state.projects.find(p => p.id === id);
+            if (!project) return;
+            
+            state.editingProjectId = id;
+            state.wizardStep = 1;
+            
+            const form = document.getElementById('project-form');
+            form.elements['name'].value = project.name || '';
+            form.elements['nameFa'].value = project.nameFa || '';
+            form.elements['desc'].value = project.desc || '';
+            form.elements['descFa'].value = project.descFa || '';
+            form.elements['type'].value = project.type || 'website';
+            form.elements['status'].value = project.status || 'working';
+            form.elements['repoUrl'].value = project.repoUrl || '';
+            form.elements['liveUrl'].value = project.liveUrl || '';
+            form.elements['techStack'].value = project.techStack || '';
+            form.elements['platform'].value = project.platform || 'github-pages';
+            form.elements['features'].value = project.features || '';
+            form.elements['role'].value = project.role || '';
+            form.elements['aiUsed'].value = project.aiUsed || 'no';
+            form.elements['audience'].value = project.audience || '';
+            form.elements['isPublic'].checked = project.isPublic !== false;
+            form.elements['isConfidential'].checked = project.isConfidential || false;
+
+            navigate('wizard');
+            updateWizardUI();
+        }
+
+        async function confirmDelete(id) {
+            if (confirm(state.lang === 'en' ? 'Are you sure you want to delete this project?' : 'آیا مطمئن هستید که می‌خواهید این پروژه را حذف کنید؟')) {
+                await deleteProject(id);
+                state.projects = await getAllProjects();
+                renderProjects();
+                renderDashboard();
+                showToast(i18n[state.lang].toast_deleted);
+            }
+        }
+
+        // Form Submission
+        document.getElementById('project-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            const project = {
+                id: state.editingProjectId || crypto.randomUUID(),
+                name: formData.get('name'),
+                nameFa: formData.get('nameFa'),
+                desc: formData.get('desc'),
+                descFa: formData.get('descFa'),
+                type: formData.get('type'),
+                status: formData.get('status'),
+                repoUrl: formData.get('repoUrl'),
+                liveUrl: formData.get('liveUrl'),
+                techStack: formData.get('techStack'),
+                platform: formData.get('platform'),
+                features: formData.get('features'),
+                role: formData.get('role'),
+                aiUsed: formData.get('aiUsed'),
+                audience: formData.get('audience'),
+                isPublic: form.elements['isPublic'].checked,
+                isConfidential: form.elements['isConfidential'].checked,
+                verifiedTech: [], // Will be populated by Analyzer
+                createdAt: state.editingProjectId ? state.projects.find(p => p.id === state.editingProjectId).createdAt : Date.now(),
+                updatedAt: Date.now()
+            };
+
+            await saveProject(project);
+            state.projects = await getAllProjects();
+            state.editingProjectId = null;
+            form.reset();
+            state.wizardStep = 1;
+            updateWizardUI();
+            
+            showToast(i18n[state.lang].toast_saved);
+            navigate('projects');
+        });
+
+        // ==========================================
+        // 6. STUDIOS ENGINE (Template Generation)
+        // ==========================================
+        function populateStudioSelect() {
+            const select = document.getElementById('studio-project-select');
+            const currentVal = select.value;
+            select.innerHTML = `<option value="">${i18n[state.lang].select_project}</option>`;
+            state.projects.forEach(p => {
+                const name = state.lang === 'fa' && p.nameFa ? p.nameFa : p.name;
+                select.innerHTML += `<option value="${p.id}">${name}</option>`;
+            });
+            if (currentVal) select.value = currentVal;
+        }
+
+        function switchStudio(studio) {
+            state.activeStudio = studio;
+            document.querySelectorAll('.studio-tab').forEach(el => {
+                el.classList.toggle('active', el.getAttribute('onclick').includes(studio));
+            });
+            document.getElementById('studio-output-container').classList.add('hidden');
+            document.getElementById('studio-empty').classList.remove('hidden');
+        }
+
+        function generateStudioContent() {
+            const projectId = document.getElementById('studio-project-select').value;
+            const lang = document.getElementById('studio-lang-select').value;
+            if (!projectId) {
+                showToast(state.lang === 'en' ? 'Please select a project first.' : 'لطفاً ابتدا یک پروژه انتخاب کنید.');
+                return;
+            }
+
+            const project = state.projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const name = lang === 'fa' && project.nameFa ? project.nameFa : project.name;
+            const desc = lang === 'fa' && project.descFa ? project.descFa : project.desc;
+            const tech = project.techStack || 'various technologies';
+            const features = project.features ? project.features.split('\n').filter(f => f.trim()) : [];
+            const role = project.role || 'Developer';
+
+            let output = '';
+
+            switch (state.activeStudio) {
+                case 'cv':
+                    output = lang === 'fa' 
+                        ? `• توسعه و طراحی ${name} با استفاده از ${tech}.\n• نقش: ${role}\n• حل چالش: ${desc}\n• ویژگی‌های کلیدی:\n${features.map(f => `  - ${f}`).join('\n')}`
+                        : `• Developed and designed ${name} using ${tech}.\n• Role: ${role}\n• Solved: ${desc}\n• Key Features:\n${features.map(f => `  - ${f}`).join('\n')}`;
+                    break;
+                case 'ad':
+                    output = lang === 'fa'
+                        ? `🚀 معرفی ${name}!\n\n${desc}\n\nساخته شده با ${tech}.\n\n${features.slice(0,3).map(f => `✅ ${f}`).join('\n')}\n\n#تکنولوژی #طراحی_وب #${tech.split(',')[0].trim().replace(/\s/g, '_')}`
+                        : `🚀 Introducing ${name}!\n\n${desc}\n\nBuilt with ${tech}.\n\n${features.slice(0,3).map(f => `✅ ${f}`).join('\n')}\n\n#Tech #WebDev #${tech.split(',')[0].trim().replace(/\s/g, '_')}`;
+                    break;
+                case 'luxury':
+                    output = lang === 'fa'
+                        ? `✦ ${name} ✦\n\nیک تجربه دیجیتال ممتاز.\n\n${desc}\n\nمشخصات فنی:\n${tech}\n\nنقش: ${role}`
+                        : `✦ ${name} ✦\n\nA premium digital experience.\n\n${desc}\n\nTechnical Specifications:\n${tech}\n\nRole: ${role}`;
+                    break;
+                case 'book':
+                    output = lang === 'fa'
+                        ? `# فصل: معماری ${name}\n\n## مقدمه\n${desc}\n\n## پیاده‌سازی\nاین پروژه با استفاده از ${tech} ساخته شده است. نقش من در این پروژه ${role} بود.\n\n## ویژگی‌های فنی\n${features.map(f => `- ${f}`).join('\n')}`
+                        : `# Chapter: Architecture of ${name}\n\n## Introduction\n${desc}\n\n## Implementation\nThis project was built using ${tech}. My role was ${role}.\n\n## Technical Features\n${features.map(f => `- ${f}`).join('\n')}`;
+                    break;
+                case 'magazine':
+                    output = lang === 'fa'
+                        ? `**ویژه‌نامه فناوری**\n\n## ${name}: نگاهی عمیق\n\n${desc}\n\nدر این پروژه، تیم ما بر روی ${tech} تمرکز کرد. ${role} بودن در این پروژه به من این فرصت را داد تا...\n\n> ویژگی‌های کلیدی: ${features.join('، ')}`
+                        : `**TECH MAGAZINE FEATURE**\n\n## ${name}: A Deep Dive\n\n${desc}\n\nIn this project, we focused on ${tech}. Being the ${role} gave me the opportunity to...\n\n> Key Features: ${features.join(', ')}`;
+                    break;
+                case 'news':
+                    output = lang === 'fa'
+                        ? `📡 **به‌روزرسانی پروژه: ${name}**\n\nوضعیت: ${project.status}\nتکنولوژی: ${tech}\n\n${desc}\n\nبرای اطلاعات بیشتر به مخزن مراجعه کنید: ${project.repoUrl || 'N/A'}`
+                        : `📡 **PROJECT UPDATE: ${name}**\n\nStatus: ${project.status}\nTech: ${tech}\n\n${desc}\n\nFor more info, visit the repository: ${project.repoUrl || 'N/A'}`;
+                    break;
+            }
+
+            document.getElementById('studio-output').innerText = output;
+            document.getElementById('studio-output-container').classList.remove('hidden');
+            document.getElementById('studio-empty').classList.add('hidden');
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(i18n[state.lang].toast_copied);
+            });
+        }
+
+        // ==========================================
+        // 7. TECHNICAL ANALYZER (Heuristic Engine)
+        // ==========================================
+        function analyzeFiles(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            const detectedTech = new Set();
+            const keywords = [
+                'react', 'vue', 'angular', 'svelte', 'next.js', 'nuxt', 'tailwind', 'bootstrap',
+                'node.js', 'express', 'nestjs', 'django', 'flask', 'laravel', 'php', 'python',
+                'mysql', 'postgresql', 'mongodb', 'sqlite', 'redis', 'graphql', 'rest api',
+                'typescript', 'javascript', 'html', 'css', 'docker', 'kubernetes', 'aws', 'firebase',
+                'supabase', 'prisma', 'redux', 'mobx', 'jest', 'cypress', 'webpack', 'vite'
+            ];
+
+            let filesProcessed = 0;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const content = e.target.result.toLowerCase();
+                    keywords.forEach(kw => {
+                        if (content.includes(kw)) {
+                            detectedTech.add(kw);
+                        }
+                    });
+                    filesProcessed++;
+                    
+                    if (filesProcessed === files.length) {
+                        displayAnalyzerResults(Array.from(detectedTech));
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function displayAnalyzerResults(techs) {
+            const container = document.getElementById('analyzer-tech-list');
+            const resultsDiv = document.getElementById('analyzer-results');
+            container.innerHTML = '';
+
+            if (techs.length === 0) {
+                container.innerHTML = `<p class="text-zinc-500 text-sm">No recognized technologies found in the uploaded files.</p>`;
+            } else {
+                techs.forEach(t => {
+                    container.innerHTML += `
+                        <div class="flex items-center justify-between p-3 bg-zinc-900 rounded-lg border border-zinc-800">
+                            <span class="font-medium capitalize">${t}</span>
+                            <span class="badge badge-green text-[10px]">Detected (Unverified)</span>
+                        </div>
+                    `;
+                });
+            }
+            resultsDiv.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // 8. EXPORT / IMPORT & PORTFOLIO GENERATOR
+        // ==========================================
+        async function exportData(format) {
+            const projects = await getAllProjects();
+            if (projects.length === 0) {
+                showToast(state.lang === 'en' ? 'No data to export.' : 'داده‌ای برای خروجی وجود ندارد.');
+                return;
+            }
+
+            let dataStr, fileName, mimeType;
+
+            if (format === 'json') {
+                dataStr = JSON.stringify(projects, null, 2);
+                fileName = `projectverse_backup_${new Date().toISOString().slice(0,10)}.json`;
+                mimeType = 'application/json';
+            } else if (format === 'csv') {
+                const headers = ['id', 'name', 'nameFa', 'desc', 'techStack', 'liveUrl', 'repoUrl', 'status', 'role'];
+                const rows = projects.map(p => headers.map(h => `"${(p[h] || '').replace(/"/g, '""')}"`).join(','));
+                dataStr = headers.join(',') + '\n' + rows.join('\n');
+                fileName = `projectverse_export_${new Date().toISOString().slice(0,10)}.csv`;
+                mimeType = 'text/csv';
+            }
+
+            const blob = new Blob([dataStr], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast(i18n[state.lang].toast_exported);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (!Array.isArray(importedData)) throw new Error('Invalid format');
+
+                    let importedCount = 0;
+                    for (const p of importedData) {
+                        if (p.id && p.name) {
+                            await saveProject(p);
+                            importedCount++;
+                        }
+                    }
+                    state.projects = await getAllProjects();
+                    renderDashboard();
+                    renderProjects();
+                    showToast(`${i18n[state.lang].toast_imported} (${importedCount} projects)`);
+                } catch (err) {
+                    alert(state.lang === 'en' ? 'Invalid JSON file.' : 'فایل JSON نامعتبر است.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function generatePortfolioHTML() {
+            const publicProjects = state.projects.filter(p => p.isPublic && !p.isConfidential);
+            if (publicProjects.length === 0) {
+                showToast(state.lang === 'en' ? 'No public projects to include.' : 'پروژه عمومی برای نمایش وجود ندارد.');
+                return;
+            }
+
+            let html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <style>body { background: #09090b; color: #f4f4f5; font-family: sans-serif; }</style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-2">My Digital Projects</h1>
+        <p class="text-zinc-400 mb-8">Generated by PROJECTVERSE</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+`;
+
+            publicProjects.forEach(p => {
+                html += `
+            <div class="border border-zinc-800 rounded-xl p-6 bg-zinc-900">
+                <h2 class="text-xl font-semibold mb-2">${p.name}</h2>
+                <p class="text-sm text-zinc-400 mb-4">${p.desc || ''}</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    ${(p.techStack || '').split(',').map(t => `<span class="text-xs bg-zinc-800 px-2 py-1 rounded">${t.trim()}</span>`).join('')}
+                </div>
+                <div class="flex gap-4">
+                    ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="text-blue-400 text-sm hover:underline">Live Demo</a>` : ''}
+                    ${p.repoUrl ? `<a href="${p.repoUrl}" target="_blank" class="text-zinc-400 text-sm hover:underline">Source Code</a>` : ''}
+                </div>
+            </div>
+`;
+            });
+
+            html += `
+        </div>
+    </div>
+</body>
+</html>`;
+
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast(state.lang === 'en' ? 'Portfolio HTML generated!' : 'HTML پورتفولیو ساخته شد!');
+        }
+
+        // ==========================================
+        // 9. INITIALIZATION
+        // ==========================================
+        async function init() {
+            try {
+                await initDB();
+                state.projects = await getAllProjects();
+                
+                // Set default language based on browser
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.includes('fa')) {
+                    toggleLang();
+                }
+
+                // Render initial view
+                navigate('dashboard');
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Initialization failed:', err);
+                alert('Failed to initialize the database. Please ensure IndexedDB is supported and not blocked.');
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
